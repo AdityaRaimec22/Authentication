@@ -1,3 +1,8 @@
+const { pool } = require('../dbConfig')
+const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = 'AdityaIsagoodb$oy'
+
 const login = async (req, res) => {
     let success = false;
 
@@ -139,3 +144,16 @@ const register = async (req, res) => {
     const authToken = jwt.sign(data, JWT_SECRET);
     res.json({ authToken })
 }
+
+const logout = (req, res) => {
+    req.logout((err) => {
+        if (err) {
+            // Handle any error that might occur during logout
+            console.error(err);
+        }
+        // Redirect or respond as needed
+        res.render("index", { message: "You have logged out successfully" });
+    });
+};
+
+module.exports = { login, fetchuser, getUser, register, logout }
